@@ -41,7 +41,10 @@
     "supertest":            "*",
     "coveralls":            "*",
     "mocha-lcov-reporter":  "*",
-    "blanket":              "*"
+    "blanket":              "*",
+    "request":              "*",
+    "json2csv":             "*",
+    "form-data":            "*"
   },
   "config": {
     "blanket": {
