@@ -1,6 +1,41 @@
+@import url(http://fonts.googleapis.com/css?family=Permanent+Marker|Waiting+for+the+Sunrise|Rock+Salt|Loved+by+the+King);
+
+@shadow: 0px 0px 10px black;
+@darkcolor: #26516B;
+@brightcolor: #FF763D;
+@mediumcolor: #7FbF96;
+
 html, body, #map{
   height: 100%;
   width: 100%;
+  font-size: 1.3em;
+}
+
+.brightcolor {
+  background-color: @brightcolor !important;
+}
+
+#title {
+  font-family: 'Rock Salt', cursive;
+  font-size: 1.8em !important;
+  color: @darkcolor !important;
+  padding-top: 3%;
+  text-shadow: 1px 1px 1px #f0e797;
+}
+
+.divider {
+  height: 3.7em !important;
+}
+
+.has-dropdown > a {
+  height: 3.5em !important;
+}
+
+nav {
+  height: 8% !important;
+  background-color: @brightcolor !important;
+  z-index: 1;
+  box-shadow: @shadow;
 }
 
 #map img{
