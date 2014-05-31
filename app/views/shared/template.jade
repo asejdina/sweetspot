@@ -9,6 +9,23 @@ html
     link(href='/less/app.css', rel='stylesheet')
     script(src='/js/vendor/modernizr.js')
   body
+    nav.top-bar
+        ul.title-area
+          li.name
+            h1: a#title(href="/") Sweetspot
+          li.toggle-topbar.menu-icon
+
+        section.top-bar-section
+          ul.left
+          ul.right
+            li.divider
+            li.brightcolor.has-form.has-dropdown.not-click
+              a Dropdown Menu
+                ul.dropdown
+                  li: a.brightcolor.hover(href='#') Link 1
+                  li: a.brightcolor.hover(href='#') Link 2
+                  li: a.brightcolor.hover(href='#') Link 3
+
     block content
 
     script(src='/js/vendor/jquery-2.1.1.js')
