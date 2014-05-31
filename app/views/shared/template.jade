@@ -4,12 +4,15 @@ html
     meta(charset='utf-8')
     title= title
     link(href='/css/normalize.css', rel='stylesheet')
+    link(href='/css/foundation.css', rel='stylesheet')
     link(href='/css/buttons.css', rel='stylesheet')
     link(href='/less/app.css', rel='stylesheet')
+    script(src='/js/vendor/modernizr.js')
   body
     block content
 
     script(src='/js/vendor/jquery-2.1.1.js')
+    script(src='/js/vendor/foundation.min.js')
     script(src='/js/vendor/lodash-2.4.1.js')
     script(src='/js/vendor/moment-2.6.0.js')
     script(src='/js/vendor/buttons.js')
