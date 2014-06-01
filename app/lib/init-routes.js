@@ -19,6 +19,7 @@ function load(app, fn){
 
   app.get('/', dbg, home.index);
   app.get('/map', dbg, home.map);
+  app.get('/about', dbg, home.about);
   app.get('/populatedb', dbg, locations.populate);
 
   console.log('Routes Loaded');
