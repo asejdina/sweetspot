@@ -18,7 +18,7 @@ function load(app, fn){
   var locations = traceur.require(__dirname + '/../routes/locations.js');
 
   app.get('/', dbg, home.index);
-  app.get('/help', dbg, home.help);
+  app.get('/map', dbg, home.map);
   app.get('/populatedb', dbg, locations.populate);
 
   console.log('Routes Loaded');
