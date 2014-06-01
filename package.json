@@ -44,7 +44,8 @@
     "blanket":              "*",
     "request":              "*",
     "json2csv":             "*",
-    "form-data":            "*"
+    "form-data":            "*",
+    "async":                "*"
   },
   "config": {
     "blanket": {
