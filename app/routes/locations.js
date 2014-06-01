@@ -1,5 +1,8 @@
+
+/*jshint camelcase:false*/
 'use strict';
-//var _ = require('lodash');
+
+var _ = require('lodash');
 var traceur = require('traceur');
 var Tract = traceur.require(__dirname + '/../models/tract.js');
 // var FormData = require('form-data');
@@ -25,15 +28,27 @@ exports.populate = (req, res)=>{
                   fs.writeFile(fileName, csv, function(err) {
                     if (err) { throw err; }
                     post2Census(fileName, nashData, permits=>{
-                      // console.log(permits);
                       Tract.findAll(tracts=>{
-                        permits.forEach((p,i)=>{
-                          var tract = tracts.filter(t=>t.tract===p[1]);
-                          var loc = nashData.filter(d=>d.id===p[0]);
-                          console.log(tract);
-                          tract=tract;
-loc=loc;
+                        permits.map(permit=>{
+                          var thing = _.find(tracts, tract=> tract.tract === permit[1]);
+                          if(thing){
+                            permit.push(thing.income);
+                          }
+                          
+                        });// end permits.map
+                        permits = permits.filter(arr=> arr.length>2);
+                        permits.map(permit=>{
+                          var found = _.find(nashData, building=>building.permit === permit[0].toString());
+                          if(found){
+                            permit.push(found.mapped_location.longitude);
+                            permit.push(found.mapped_location.latitude);
+                          }
                         });
+                        var permitObjectArr = [];
+                        permits.map(permit=>{
+                          permitObjectArr.push({permit: permit[0], tract: permit[1], income: permit[2], longitude: permit[3], latitude: permit[4]});                 
+                        });
+                        console.log(permitObjectArr);
                       });
 
                     });
