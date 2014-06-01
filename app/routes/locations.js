@@ -56,14 +56,11 @@ function getTract(tractData){
   tractData = tractData.map(each=> each.split(','));
 
   tractData = tractData.map(data => {
-    //if(data[0] && data[17]){
       data[0] = data[0].replace( /"/g, '' )*1;
       if(typeof(data[17])!== 'undefined') {
         data[17] = data[17].replace( /"/g, '' )*1;
         return [data[0], data[17]];
       }
- 
-    //}
   });
   return tractData;
 }
