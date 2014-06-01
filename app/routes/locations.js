@@ -1,4 +1,3 @@
-
 /*jshint camelcase:false*/
 'use strict';
 
@@ -51,13 +50,13 @@ exports.populate = (req, res)=>{
                           permitObjectArr.push({permit: permit[0], tract: permit[1], income: permit[2], longitude: permit[3], latitude: permit[4]});
                         });
                         console.log(permitObjectArr);
+                        res.send({mapData: permitObjectArr});
                       });
 
                     });
                     // post2Census(fileName, nashData, response=> console.log(response));
                   });
                 });
-      res.redirect('/map');
     }
   });
 };

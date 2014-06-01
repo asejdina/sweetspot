@@ -9,7 +9,26 @@
   var map;
 
   function init(){
+    $('#go').click(getMarkers);
     initMap(36.1666, -86.7833, 11);
+  }
+
+  function getMarkers(){
+    $.ajax({
+      url: '/populatedb',
+      type: 'GET',
+      data: null,
+      dataType: 'json',
+      success: mapData=>{
+        console.log(mapData);
+        mapData.mapData.forEach(m=>{
+          var lat = m.latitude;
+          var lon = m.longitude;
+          var name = m.permit;
+          addMarker(lat, lon, name.toString());
+        });
+      }
+    });
   }
 
   function addMarker(lat, lng, name){

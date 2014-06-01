@@ -20,9 +20,4 @@
   function showData(d) {
     console.log(d);
   }
-
-  function extractAddress(obj) {
-
-  }
-
 })();
