@@ -1,7 +1,12 @@
+
+/*jshint camelcase:false*/
 'use strict';
 
-// var traceur = require('traceur');
-// var Permit = traceur.require(__dirname + '/../models/permit.js');
+
+var _ = require('lodash');
+var traceur = require('traceur');
+var Tract = traceur.require(__dirname + '/../models/tract.js');
+
 // var FormData = require('form-data');
 var request = require('request');
 var json2csv = require('json2csv');
@@ -24,7 +29,32 @@ exports.populate = (req, res)=>{
                   var fileName = __dirname + '/../static/permits.csv';
                   fs.writeFile(fileName, csv, function(err) {
                     if (err) { throw err; }
-                    post2Census(fileName, nashData);
+                    post2Census(fileName, nashData, permits=>{
+                      Tract.findAll(tracts=>{
+                        permits.map(permit=>{
+                          var thing = _.find(tracts, tract=> tract.tract === permit[1]);
+                          if(thing){
+                            permit.push(thing.income);
+                          }
+                          
+                        });// end permits.map
+                        permits = permits.filter(arr=> arr.length>2);
+                        permits.map(permit=>{
+                          var found = _.find(nashData, building=>building.permit === permit[0].toString());
+                          if(found){
+                            permit.push(found.mapped_location.longitude);
+                            permit.push(found.mapped_location.latitude);
+                          }
+                        });
+                        var permitObjectArr = [];
+                        permits.map(permit=>{
+                          permitObjectArr.push({permit: permit[0], tract: permit[1], income: permit[2], longitude: permit[3], latitude: permit[4]});                 
+                        });
+                        console.log(permitObjectArr);
+                      });
+
+                    });
+                    // post2Census(fileName, nashData, response=> console.log(response));
                   });
                 });
       res.redirect('/');
@@ -32,14 +62,18 @@ exports.populate = (req, res)=>{
   });
 };
 
-function post2Census(fileName, nashData) {
+function post2Census(fileName, nashData, fn) {
   var url = 'http://geocoding.geo.census.gov/geocoder/geographies/addressbatch';
   var r = request.post(url, function(err, httpResponse, tractData) {
     if(err) {
-      return console.log('upload fail', err);
+      fn(err);
+      // return console.log('upload fail', err);
     }
     else {
-      getTract(tractData, nashData);
+      var tractArray = getTract(tractData);
+      tractArray = tractArray.filter(each=> each !== undefined);
+
+      fn(tractArray);
     }
   });
 
@@ -49,12 +83,16 @@ function post2Census(fileName, nashData) {
   fd.append('vintage', '4');
 }
 
-function getTract(tractData, nashData){
+function getTract(tractData){
   tractData = tractData.replace( /\n/g, '~~' ).split( '~~' );
   tractData = tractData.map(each=> each.split(','));
-  tractData = tractData.map(data => [data[0], data[17]]);
-  console.log('*************TRACTDATA************************');
-  console.log(tractData);
-  console.log('***********************NASHDATA*************************');
-  //console.log(nashData);
+
+  tractData = tractData.map(data => {
+      data[0] = data[0].replace( /"/g, '' )*1;
+      if(typeof(data[17])!== 'undefined') {
+        data[17] = data[17].replace( /"/g, '' )*1;
+        return [data[0], data[17]];
+      }
+  });
+  return tractData;
 }
