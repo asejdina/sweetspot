@@ -50,7 +50,7 @@ exports.populate = (req, res)=>{
                         permits.map(permit=>{
                           permitObjectArr.push({permit: permit[0], tract: permit[1], income: permit[2], longitude: permit[3], latitude: permit[4]});                 
                         });
-                        console.log(permitObjectArr);
+                        res.render('home/map', {mapData: permitObjectArr});
                       });
 
                     });
