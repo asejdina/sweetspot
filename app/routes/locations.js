@@ -1,5 +1,5 @@
 'use strict';
-
+//var _ = require('lodash');
 // var traceur = require('traceur');
 // var Permit = traceur.require(__dirname + '/../models/permit.js');
 // var FormData = require('form-data');
@@ -39,7 +39,9 @@ function post2Census(fileName, nashData) {
       return console.log('upload fail', err);
     }
     else {
-      getTract(tractData, nashData);
+      var tractArray = getTract(tractData);
+      //tractData = _.filter(tractData, data=> {(typeof(data) !== 'undefined');});
+      console.log(tractArray);
     }
   });
 
@@ -49,20 +51,19 @@ function post2Census(fileName, nashData) {
   fd.append('vintage', '4');
 }
 
-function getTract(tractData, nashData){
+function getTract(tractData){
   tractData = tractData.replace( /\n/g, '~~' ).split( '~~' );
   tractData = tractData.map(each=> each.split(','));
 
   tractData = tractData.map(data => {
-    if(data[0] && data[17]){
+    //if(data[0] && data[17]){
       data[0] = data[0].replace( /"/g, '' )*1;
-      data[17] = data[17].replace( /"/g, '' )*1;
-      return [data[0], data[17]];
-    }
+      if(typeof(data[17])!== 'undefined') {
+        data[17] = data[17].replace( /"/g, '' )*1;
+        return [data[0], data[17]];
+      }
+ 
+    //}
   });
-  //tractData = tractData.map(set=> set);
-  console.log('*************TRACTDATA************************');
-  console.log(tractData);
-  console.log('***********************NASHDATA*************************');
-  //console.log(nashData);
+  return tractData;
 }
