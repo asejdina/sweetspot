@@ -50,6 +50,8 @@ function post2Census(fileName, nashData) {
 }
 
 function getTract(tractData, nashData){
+  console.log(tractData);
+
   tractData = tractData.replace( /\n/g, '~~' ).split( '~~' );
   tractData = tractData.map(each=> each.split(','));
   tractData = tractData.map(data => [data[0], data[17]]);
