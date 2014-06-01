@@ -1,4 +1,3 @@
-
 /*jshint camelcase:false*/
 'use strict';
 
@@ -50,14 +49,14 @@ exports.populate = (req, res)=>{
                         permits.map(permit=>{
                           permitObjectArr.push({permit: permit[0], tract: permit[1], income: permit[2], longitude: permit[3], latitude: permit[4]});
                         });
-                        res.render('home/map', {mapData: permitObjectArr});
+                        console.log(permitObjectArr);
+                        res.send({mapData: permitObjectArr});
                       });
 
                     });
                     // post2Census(fileName, nashData, response=> console.log(response));
                   });
                 });
-      res.redirect('/map');
     }
   });
 };
@@ -86,7 +85,6 @@ function post2Census(fileName, nashData, fn) {
 function getTract(tractData){
   tractData = tractData.replace( /\n/g, '~~' ).split( '~~' );
   tractData = tractData.map(each=> each.split(','));
-
   tractData = tractData.map(data => {
       data[0] = data[0].replace( /"/g, '' )*1;
       if(typeof(data[17])!== 'undefined') {
@@ -95,5 +93,4 @@ function getTract(tractData){
       }
   });
   return tractData;
-
 }
