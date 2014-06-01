@@ -1,19 +1,14 @@
-/* jshint unused:false */
 'use strict';
 //var _ = require('lodash');
-var traceur = require('traceur');
-var Tract = traceur.require(__dirname + '/../models/tract.js');
-
+// var traceur = require('traceur');
+// var Permit = traceur.require(__dirname + '/../models/permit.js');
 // var FormData = require('form-data');
-
 var request = require('request');
 var json2csv = require('json2csv');
 var fs = require('fs');
 
 
 exports.populate = (req, res)=>{
-console.log('before request');
-
   var url = 'http://data.nashville.gov/resource/3h5w-q8b7.json?$where=const_cost > 75000&permit_type_description=building residential - rehab';
   request(url, (error, response, nashData)=> {
     if (!error && response.statusCode === 200) {
@@ -22,8 +17,6 @@ console.log('before request');
         return {id:d.permit, addr: d.address, city:d.city, state:d.state, zip:d.zip};
       });
 
-console.log('before create csv!!!!!!!!!!!!!!!!!!!!');
-
       json2csv({data: csvData,
                 fields: ['id', 'addr', 'city', 'state', 'zip']},
                 function(err, csv) {
@@ -31,15 +24,7 @@ console.log('before create csv!!!!!!!!!!!!!!!!!!!!');
                   var fileName = __dirname + '/../static/permits.csv';
                   fs.writeFile(fileName, csv, function(err) {
                     if (err) { throw err; }
-                    var permits = post2Census(fileName, nashData);
-                    // console.log(tractArray);
-                    Tract.findAll(tracts=>{
-                      permits.forEach((p,i)=>{
-                        console.log(p);
-                        // var tract = tracts.filter(t=>t.tract===permit[1]);
-                        // console.log(tract);
-                      });
-                    });
+                    post2Census(fileName, nashData, response=> console.log(response));
                   });
                 });
       res.redirect('/');
@@ -47,7 +32,7 @@ console.log('before create csv!!!!!!!!!!!!!!!!!!!!');
   });
 };
 
-function post2Census(fileName, nashData) {
+function post2Census(fileName, nashData, fn) {
   var url = 'http://geocoding.geo.census.gov/geocoder/geographies/addressbatch';
   var r = request.post(url, function(err, httpResponse, tractData) {
     if(err) {
@@ -56,8 +41,7 @@ function post2Census(fileName, nashData) {
     else {
       var tractArray = getTract(tractData);
       tractArray = tractArray.filter(each=> each !== undefined);
-console.log(tractArray);
-      return tractArray;
+      fn(tractArray);
     }
   });
 
