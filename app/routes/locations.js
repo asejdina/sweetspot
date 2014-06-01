@@ -1,7 +1,7 @@
 'use strict';
 //var _ = require('lodash');
-// var traceur = require('traceur');
-// var Permit = traceur.require(__dirname + '/../models/permit.js');
+//var traceur = require('traceur'); 
+//var Tract = traceur.require(__dirname + '/../models/tract.js');
 // var FormData = require('form-data');
 var request = require('request');
 var json2csv = require('json2csv');
@@ -42,6 +42,7 @@ function post2Census(fileName, nashData) {
       var tractArray = getTract(tractData);
       tractArray = tractArray.filter(each=> each !== undefined);
       console.log(tractArray);
+
     }
   });
 
