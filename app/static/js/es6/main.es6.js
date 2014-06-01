@@ -8,8 +8,6 @@
 
 
   function init(){
-    alert('hi');
-
     $('#getData').click(getData);
   }
 

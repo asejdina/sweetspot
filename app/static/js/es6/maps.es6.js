@@ -9,7 +9,7 @@
   var map;
 
   function init(){
-    initMap(36.1666, -86.7833, 10);
+    initMap(36.1666, -86.7833, 11);
   }
 
   function addMarker(lat, lng, name){

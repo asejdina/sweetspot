@@ -27,7 +27,7 @@ exports.populate = (req, res)=>{
                     post2Census(fileName, nashData);
                   });
                 });
-      res.redirect('/');
+      res.redirect('/map');
     }
   });
 };
