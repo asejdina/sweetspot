@@ -10,6 +10,7 @@
 html, body, #map{
   height: 100%;
   width: 100%;
+  margin: auto;
   font-size: 1.3em;
 }
 
@@ -34,12 +35,14 @@ html, body, #map{
 }
 
 nav {
-  height: 8% !important;
-  background-color: @brightcolor !important;
-  z-index: 1;
+  height: 10%;
+  background-color: @brightcolor;
   box-shadow: @shadow;
 }
 
-#map img{
-  max-width: none;
+#map{
+  width: 90%;
+  height: 90%;
+  display: block;
+  position: relative;
 }

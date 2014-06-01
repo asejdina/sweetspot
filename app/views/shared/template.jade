@@ -4,29 +4,31 @@ html
     meta(charset='utf-8')
     title= title
     link(href='/css/normalize.css', rel='stylesheet')
-    link(href='/css/foundation.css', rel='stylesheet')
+    //- link(href='/css/foundation.css', rel='stylesheet')
     link(href='/css/buttons.css', rel='stylesheet')
     link(href='/less/app.css', rel='stylesheet')
     script(src='/js/vendor/modernizr.js')
   body
     nav.top-bar
-        ul.title-area
-          li.name
-            h1: a#title(href="/") Sweetspot
-          li.toggle-topbar.menu-icon
+      h1: a#title(href="/") Sweetspot
 
-        section.top-bar-section
-          ul.left
-          ul.right
-            li.divider
-            li.brightcolor.has-form.has-dropdown.not-click
-              a Dropdown Menu
-                ul.dropdown
-                  li: a.brightcolor.hover(href='#') Link 1
-                  li: a.brightcolor.hover(href='#') Link 2
-                  li: a.brightcolor.hover(href='#') Link 3
+      block content
 
-    block content
+
+        //- section.top-bar-section
+        //-   ul.left
+        //-   ul.right
+        //-     li.divider
+        //-     li.brightcolor.has-form.has-dropdown.not-click
+        //-       a Dropdown Menu
+        //-         ul.dropdown
+        //-           li: a.brightcolor.hover(href='#') Link 1
+        //-           li: a.brightcolor.hover(href='#') Link 2
+        //-           li: a.brightcolor.hover(href='#') Link 3
+
+    #map
+
+
 
     script(src='/js/vendor/jquery-2.1.1.js')
     script(src='/js/vendor/foundation.min.js')
@@ -36,6 +38,6 @@ html
     script(src='/js/vendor/traceur.js')
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBXdgkj12v5nq3zz4clWmj2q_d72pUA7OA&sensor=true')
     script(src='/js/es6/compiled/main.js')
-//    script(src='/js/es6/compiled/maps.js')
+    script(src='/js/es6/compiled/maps.js')
 
     block scripts
