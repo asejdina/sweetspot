@@ -40,7 +40,7 @@ function post2Census(fileName, nashData) {
     }
     else {
       var tractArray = getTract(tractData);
-      //tractData = _.filter(tractData, data=> {(typeof(data) !== 'undefined');});
+      tractArray = tractArray.filter(each=> each !== undefined);
       console.log(tractArray);
     }
   });
