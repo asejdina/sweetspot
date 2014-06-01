@@ -51,30 +51,16 @@ function post2Census(fileName, nashData) {
   fd.append('vintage', '4');
 }
 
-function getTract(tractData, nashData){
-  console.log(tractData);
-
-  tractData = tractData.replace( /\n/g, '~~' ).split( '~~' );
-  tractData = tractData.map(each=> each.split(','));
-  tractData = tractData.map(data => [data[0], data[17]]);
-  console.log('*************TRACTDATA************************');
-  console.log(tractData);
-  console.log('***********************NASHDATA*************************');
-  //console.log(nashData);
-}
 function getTract(tractData){
   tractData = tractData.replace( /\n/g, '~~' ).split( '~~' );
   tractData = tractData.map(each=> each.split(','));
 
   tractData = tractData.map(data => {
-    //if(data[0] && data[17]){
       data[0] = data[0].replace( /"/g, '' )*1;
       if(typeof(data[17])!== 'undefined') {
         data[17] = data[17].replace( /"/g, '' )*1;
         return [data[0], data[17]];
       }
-
-    //}
   });
   return tractData;
 }
