@@ -52,7 +52,15 @@ function post2Census(fileName, nashData) {
 function getTract(tractData, nashData){
   tractData = tractData.replace( /\n/g, '~~' ).split( '~~' );
   tractData = tractData.map(each=> each.split(','));
-  tractData = tractData.map(data => [data[0], data[17]]);
+
+  tractData = tractData.map(data => {
+    if(data[0] && data[17]){
+      data[0] = data[0].replace( /"/g, '' )*1;
+      data[17] = data[17].replace( /"/g, '' )*1;
+      return [data[0], data[17]];
+    }
+  });
+  //tractData = tractData.map(set=> set);
   console.log('*************TRACTDATA************************');
   console.log(tractData);
   console.log('***********************NASHDATA*************************');
