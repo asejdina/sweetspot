@@ -1,3 +1,4 @@
+/* jshint unused:false */
 'use strict';
 //var _ = require('lodash');
 var traceur = require('traceur');
@@ -30,13 +31,13 @@ console.log('before create csv!!!!!!!!!!!!!!!!!!!!');
                   var fileName = __dirname + '/../static/permits.csv';
                   fs.writeFile(fileName, csv, function(err) {
                     if (err) { throw err; }
-                    var tractArray = post2Census(fileName, nashData);
-                    console.log(tractArray);
+                    var permits = post2Census(fileName, nashData);
+                    // console.log(tractArray);
                     Tract.findAll(tracts=>{
-                      var permits = tractArray;
-                      permits.forEach(permit=>{
-                        var tract = tracts.filter(t=>t.tract===permit[1]);
-                        console.log(tract);
+                      permits.forEach((p,i)=>{
+                        console.log(p);
+                        // var tract = tracts.filter(t=>t.tract===permit[1]);
+                        // console.log(tract);
                       });
                     });
                   });
