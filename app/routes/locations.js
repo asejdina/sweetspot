@@ -16,7 +16,6 @@ exports.populate = (req, res)=>{
       var csvData = nashData.map(function(d) {
         return {id:d.permit, addr: d.address, city:d.city, state:d.state, zip:d.zip};
       });
-      console.log(csvData);
 
       json2csv({data: csvData,
                 fields: ['id', 'addr', 'city', 'state', 'zip']},
@@ -25,8 +24,7 @@ exports.populate = (req, res)=>{
                   var fileName = __dirname + '/../static/permits.csv';
                   fs.writeFile(fileName, csv, function(err) {
                     if (err) { throw err; }
-                    console.log('file saved');
-                    post2Census(fileName);
+                    post2Census(fileName, nashData);
                   });
                 });
       res.redirect('/');
@@ -34,14 +32,14 @@ exports.populate = (req, res)=>{
   });
 };
 
-function post2Census(fileName) {
+function post2Census(fileName, nashData) {
   var url = 'http://geocoding.geo.census.gov/geocoder/geographies/addressbatch';
-  var r = request.post(url, function(err, httpResponse, data) {
+  var r = request.post(url, function(err, httpResponse, tractData) {
     if(err) {
       return console.log('upload fail', err);
     }
     else {
-      console.log(data);
+      getTract(tractData, nashData);
     }
   });
 
@@ -49,4 +47,14 @@ function post2Census(fileName) {
   fd.append('addressFile', fs.createReadStream(fileName));
   fd.append('benchmark', '4');
   fd.append('vintage', '4');
+}
+
+function getTract(tractData, nashData){
+  tractData = tractData.replace( /\n/g, '~~' ).split( '~~' );
+  tractData = tractData.map(each=> each.split(','));
+  tractData = tractData.map(data => [data[0], data[17]]);
+  console.log('*************TRACTDATA************************');
+  console.log(tractData);
+  console.log('***********************NASHDATA*************************');
+  //console.log(nashData);
 }
