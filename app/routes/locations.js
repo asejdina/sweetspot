@@ -31,14 +31,16 @@ console.log('before create csv!!!!!!!!!!!!!!!!!!!!');
                   var fileName = __dirname + '/../static/permits.csv';
                   fs.writeFile(fileName, csv, function(err) {
                     if (err) { throw err; }
-                    var permits = post2Census(fileName, nashData);
-                    // console.log(tractArray);
-                    Tract.findAll(tracts=>{
-                      permits.forEach((p,i)=>{
-                        console.log(p);
-                        // var tract = tracts.filter(t=>t.tract===permit[1]);
-                        // console.log(tract);
+                    var permits = post2Census(fileName, nashData, fn=>{
+                      // console.log(permits);
+                      Tract.findAll(tracts=>{
+                        permits.forEach((p,i)=>{
+                          console.log(p);
+                          var tract = tracts.filter(t=>t.tract===p[1]);
+                          console.log(tract);
+                        });
                       });
+
                     });
                   });
                 });
@@ -47,17 +49,18 @@ console.log('before create csv!!!!!!!!!!!!!!!!!!!!');
   });
 };
 
-function post2Census(fileName, nashData) {
+function post2Census(fileName, nashData, fn) {
   var url = 'http://geocoding.geo.census.gov/geocoder/geographies/addressbatch';
   var r = request.post(url, function(err, httpResponse, tractData) {
     if(err) {
-      return console.log('upload fail', err);
+      fn(err);
+      // return console.log('upload fail', err);
     }
     else {
       var tractArray = getTract(tractData);
       tractArray = tractArray.filter(each=> each !== undefined);
-console.log(tractArray);
-      return tractArray;
+// console.log(tractArray);
+      fn(tractArray);
     }
   });
 
