@@ -32,6 +32,7 @@
           let lon = m.longitude;
           createMarker(lat, lon);
         });
+        makeHeat();
       }
     });
   }
@@ -39,9 +40,9 @@
   function createMarker(lat, lng){
     let latLng = new google.maps.LatLng(lat, lng);
     array.push(latLng);
-    console.log(array);
-    console.log(latLng);
-    // new google.maps.Marker({map:map, position:latLng});
+  }
+
+  function makeHeat(){
     new google.maps.visualization.HeatmapLayer({map:map, data: array});
   }
 })();
