@@ -38,11 +38,11 @@
   }
 
   function createMarker(lat, lng){
-    let latLng = new google.maps.LatLng(lat, lng);
+    let latLng = {location: new google.maps.LatLng(lat, lng), weight: 5};
     array.push(latLng);
   }
 
   function makeHeat(){
-    new google.maps.visualization.HeatmapLayer({map:map, data: array});
+    new google.maps.visualization.HeatmapLayer({map:map, data: array, maxIntensity: 5, opacity: 0.3, radius: 15});
   }
 })();
