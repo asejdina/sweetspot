@@ -7,3 +7,7 @@ exports.index = (req, res)=>{
 exports.map = (req, res)=>{
   res.render('home/map', {title: 'Map'});
 };
+
+exports.about = (req, res)=>{
+  res.render('home/about', {title: 'About Sweetspot'});
+};

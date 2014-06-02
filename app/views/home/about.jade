@@ -16,9 +16,19 @@ block content
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               ul.nav.navbar-nav#go
                 li
-                  a.btn(href='/about') About
+                  a.btn.active(href='/about') About
                 li
-                  a.btn.active(href='/map') Map
+                  a.btn(href='/map') Map
                 li
                   a.btn(href='#') Find It!
-  #map
+  .container.about
+    .row.clearfix
+        .col-md-12.column
+          .page-header
+            h1
+              small About
+          .jumbotron
+            h1
+              | Sweetspot
+            p
+              | Built by a team of Nashville Software School Students, Sweetspot shows the effects of gentrification in Nashville. By taking new building permits and US Census Data, we were able to compare projects costing over $75,000 to low income areas, hoping to show where growth might be and may occur.
