@@ -15,7 +15,7 @@
   }
 
   function initMap(lat, lng, zoom){
-    let mapOptions = {center: new google.maps.LatLng(lat, lng), zoom: zoom, mapTypeId: google.maps.MapTypeId.ROADMAP};
+    var mapOptions = {center: new google.maps.LatLng(lat, lng), zoom: zoom, mapTypeId: google.maps.MapTypeId.ROADMAP};
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
   }
 
@@ -28,8 +28,8 @@
       success: mapData=>{
         console.log(mapData);
         mapData.mapData.forEach(m=>{
-          let lat = m.latitude;
-          let lon = m.longitude;
+          var lat = m.latitude;
+          var lon = m.longitude;
           createMarker(lat, lon);
         });
         makeHeat();
@@ -38,7 +38,7 @@
   }
 
   function createMarker(lat, lng){
-    let latLng = {location: new google.maps.LatLng(lat, lng), weight: 5};
+    var latLng = {location: new google.maps.LatLng(lat, lng), weight: 5};
     array.push(latLng);
   }
 
